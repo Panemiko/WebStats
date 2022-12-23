@@ -1,4 +1,4 @@
-import { MdHealthAndSafety as ShieldIcon } from 'react-icons/md'
+import { MdEmojiEmotions as ShieldIcon } from 'react-icons/md'
 
 // MdShield
 // MdHealthAndSafety
