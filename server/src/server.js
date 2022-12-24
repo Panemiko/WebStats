@@ -16,18 +16,36 @@ const io = new Server(server, {
 
 const database = new PrismaClient()
 
+async function getCharacter(id) {
+  return await database.character.findUnique({
+    where: { id: parseInt(id) },
+    include: {
+      abilities: true,
+      attributes: true,
+      items: true,
+      skills: true,
+    },
+  })
+}
+
 io.on('connection', (socket) => {
   console.log(`> New connection [${socket.id}]`)
 
   socket.on('setup', async ({ characterId }) => {
+    if (typeof characterId !== 'number') {
+      console.log(`> Socket ${socket.id} using a invalid character id`)
+      return
+    }
+
     console.log(`> Character ${characterId} loading`)
 
-    socket.emit(
-      'set-char',
-      await database.character.findUnique({
-        where: { id: parseInt(characterId) },
-      })
-    )
+    socket.emit('set-character', await getCharacter(characterId))
+    socket.emit('set-attributes', await database.attribute.findMany())
+    socket.emit('set-skills', await database.skill.findMany())
+  })
+
+  socket.on('disconnect', () => {
+    console.log(`> Socket ${socket.id} disconnected`)
   })
 })
 
