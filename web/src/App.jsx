@@ -1,4 +1,4 @@
-import { AttributeButton } from 'components/AttributeButton'
+// import { AttributeButton } from 'components/AttributeButton'
 import { CharacterAvatar } from 'components/CharacterAvatar'
 import { CharacterInfo } from 'components/CharacterInfo'
 import { IconButton } from 'components/IconButton'
@@ -6,18 +6,44 @@ import { LevelIndicator } from 'components/LevelIndicator'
 import { LifeIndicator } from 'components/LifeIndicator'
 import { SanityIndicator } from 'components/SanityIndicator'
 import { characterContext } from 'contexts/CharacterContext'
-import { useRouter } from 'next/router'
+import { useSocket } from 'hooks/useSocket'
+import { useEffect, useState } from 'react'
 import {
   MdBackpack as BackpackIcon,
   MdNotes as NoteIcon,
   MdStars as StarIcon,
 } from 'react-icons/md'
+import { io } from 'socket.io-client'
 
 export default function CharacterPage() {
-  const router = useRouter()
-  const { id } = router.query
+  const [character, setCharacter] = useState({})
 
-  if (!id) return
+  const id = '1'
+
+  useEffect(() => {
+    const socket = io('ws://localhost:3000')
+
+    socket.on('connect', () => {
+      console.log('Connected')
+      socket.emit('setup', { characterId: parseInt(id) })
+    })
+
+    socket.on('disconnect', () => {
+      console.log('Disconnected')
+    })
+
+    socket.on('connect_error', (err) => {
+      console.log(err)
+    })
+
+    socket.on('set-char', (char) => {
+      console.log(char)
+
+      if (!char) return setCharacter({ name: 'Personagem não encontrado' })
+
+      setCharacter(char)
+    })
+  }, [])
 
   return (
     <characterContext.Provider value={id}>
@@ -25,16 +51,22 @@ export default function CharacterPage() {
         <main className='py-12 px-4 bg-mauve1 grid grid-cols-5 '>
           <div className='col-start-1 col-end-4'>
             <div className='flex flex-col mb-6'>
-              <LevelIndicator level={0} />
-              <CharacterInfo name='Harper Brown' age={25} />
+              <LevelIndicator level={character.level} />
+              <CharacterInfo name={character.name} age={character.age} />
             </div>
             <div className='flex flex-col gap-2'>
-              <LifeIndicator life={26} maxLife={30} />
-              <SanityIndicator sanity={56} maxSanity={100} />
+              <LifeIndicator
+                life={character.life}
+                maxLife={character.maxLife}
+              />
+              <SanityIndicator
+                sanity={character.sanity}
+                maxSanity={character.maxSanity}
+              />
             </div>
           </div>
           <div className='col-start-4 col-end-6'>
-            <CharacterAvatar src='https://media.discordapp.net/attachments/516771951763783680/1047267719600418967/image.png' />
+            <CharacterAvatar src={character.picture} />
           </div>
         </main>
         <div className='flex bg-mauve1 justify-between px-4 pb-12'>
@@ -42,7 +74,7 @@ export default function CharacterPage() {
           <IconButton Icon={StarIcon} />
           <IconButton Icon={NoteIcon} />
         </div>
-        <div className='py-8 px-4'>
+        {/* <div className='py-8 px-4'>
           <h1 className='text-cyan12 mb-8 font-bold text-2xl text-center'>
             ATRIBUTOS
           </h1>
@@ -56,7 +88,7 @@ export default function CharacterPage() {
             <AttributeButton level={0} tag='gue' />
             <AttributeButton level={0} tag='mor' />
           </div>
-        </div>
+        </div> */}
       </div>
     </characterContext.Provider>
   )

@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 export function AttributeButton(props) {
   const { level, tag } = props
 
-  const formattedLevel = level.toLocaleString('en-US', {
+  const formattedLevel = (level || 0).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false,
   })

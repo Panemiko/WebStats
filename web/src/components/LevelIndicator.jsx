@@ -1,7 +1,7 @@
 export function LevelIndicator(props) {
   const { level } = props
 
-  const formattedLevel = level.toLocaleString('en-US', {
+  const formattedLevel = (level || 0).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false,
   })

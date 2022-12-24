@@ -4,9 +4,7 @@
       "es2022": true
   },
   "extends": [
-      "next/core-web-vitals",
-      "eslint:recommended",
-      "plugin:react/recommended"
+      "eslint:recommended"
   ],
   "parserOptions": {
       "ecmaFeatures": {
@@ -16,15 +14,10 @@
       "sourceType": "module"
   },
   "plugins": [
-      "react",
       "prettier",
       "simple-import-sort"
   ],
   "rules": {
-      "react-hooks/exhaustive-deps": "off",
-      "react/prop-types": "off",
-      "react/react-in-jsx-scope": "off",
-      "@next/next/no-img-element": "off",
       "import/no-anonymous-default-export": "off",
       "space-before-function-paren": "off",
       "no-use-before-define": "off",
