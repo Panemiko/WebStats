@@ -1,10 +1,10 @@
-import { AttributeButton } from 'components/AttributeButton'
-import { CharacterAvatar } from 'components/CharacterAvatar'
-import { CharacterInfo } from 'components/CharacterInfo'
-import { IconButton } from 'components/IconButton'
-import { LevelIndicator } from 'components/LevelIndicator'
-import { LifeIndicator } from 'components/LifeIndicator'
-import { SanityIndicator } from 'components/SanityIndicator'
+import { AttributeButton } from 'components/CharacterInfo/AttributeButton'
+import { CharacterAvatar } from 'components/CharacterInfo/CharacterAvatar'
+import { CharacterInfo } from 'components/CharacterInfo/CharacterInfo'
+import { IconButton } from 'components/CharacterInfo/IconButton'
+import { LevelIndicator } from 'components/CharacterInfo/LevelIndicator'
+import { LifeIndicator } from 'components/CharacterInfo/LifeIndicator'
+import { SanityIndicator } from 'components/CharacterInfo/SanityIndicator'
 import { metaContext } from 'contexts/MetaContext'
 import { useContext } from 'react'
 import {
@@ -52,10 +52,10 @@ export function CharacterInfoLayout() {
                 attributeId={attribute.id}
                 tag={attribute.tag}
                 level={
-                  character.attributes.filter(
+                  character.attributes.find(
                     (charAttribute) =>
                       charAttribute.attributeId === attribute.id
-                  )[0]?.level || 0
+                  )?.level || 0
                 }
               />
             </div>

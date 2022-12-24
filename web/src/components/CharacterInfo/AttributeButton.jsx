@@ -1,9 +1,9 @@
-import { layoutContext } from 'contexts/LayoutContext'
+import { roomContext } from 'contexts/RoomContext'
 import { useCallback, useContext } from 'react'
 
 export function AttributeButton(props) {
   const { level, tag, attributeId } = props
-  const { setLayout } = useContext(layoutContext)
+  const { setRoom } = useContext(roomContext)
 
   const formattedLevel = (level || 0).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
@@ -11,7 +11,7 @@ export function AttributeButton(props) {
   })
 
   const onClick = useCallback(() => {
-    setLayout(`attribute/${attributeId}`)
+    setRoom({ layout: 'attribute', selector: attributeId })
   }, [])
 
   return (

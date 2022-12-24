@@ -1,12 +1,12 @@
-import { layoutContext } from 'contexts/LayoutContext'
 import { metaContext } from 'contexts/MetaContext'
+import { roomContext } from 'contexts/RoomContext'
 import { AttributeLayout } from 'layouts/Attribute'
 import { CharacterInfoLayout } from 'layouts/CharacterInfo'
 import { useEffect, useState } from 'react'
 import { io } from 'socket.io-client'
 
 export default function CharacterPage() {
-  const [layout, setLayout] = useState('character')
+  const [room, setRoom] = useState({ layout: 'character' })
   const [socket, setSocket] = useState({})
   const [character, setCharacter] = useState({})
   const [attributes, setAttributes] = useState([])
@@ -55,10 +55,10 @@ export default function CharacterPage() {
 
   return (
     <metaContext.Provider value={{ character, attributes, skills, socket }}>
-      <layoutContext.Provider value={{ layout, setLayout }}>
-        {layout === 'character' && <CharacterInfoLayout />}
-        {layout.startsWith('attribute') && <AttributeLayout />}
-      </layoutContext.Provider>
+      <roomContext.Provider value={{ room, setRoom }}>
+        {room.layout === 'character' && <CharacterInfoLayout />}
+        {room.layout === 'attribute' && <AttributeLayout />}
+      </roomContext.Provider>
     </metaContext.Provider>
   )
 }
