@@ -1,5 +1,6 @@
 import 'styles/global.css'
 
+import { AbilitiesPage } from 'pages/AbilitiesPage'
 import { AttributePage } from 'pages/AttributePage'
 import { CharacterPage } from 'pages/CharacterPage'
 import { InventoryPage } from 'pages/InventoryPage'
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/character/:characterId/abilities',
+    element: <AbilitiesPage />,
   },
 ])
 

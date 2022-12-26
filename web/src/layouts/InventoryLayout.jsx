@@ -22,12 +22,14 @@ export function InventoryLayout() {
     return total
   }
 
+  const totalWeight = calcTotalWeight()
+
   return (
     <div>
       <Header>
         <Title>Inventário</Title>
-        <SubTitle>
-          {calcTotalWeight()}kg/{character?.maxWeight}kg
+        <SubTitle color={totalWeight > character?.maxWeight && 'error'}>
+          {totalWeight}kg/{character?.maxWeight}kg
         </SubTitle>
       </Header>
       <ItemList>
