@@ -5,16 +5,15 @@ import { IconButton } from 'components/CharacterInfo/IconButton'
 import { LevelIndicator } from 'components/CharacterInfo/LevelIndicator'
 import { LifeIndicator } from 'components/CharacterInfo/LifeIndicator'
 import { SanityIndicator } from 'components/CharacterInfo/SanityIndicator'
-import { metaContext } from 'contexts/MetaContext'
-import { useContext } from 'react'
+import { useStoreUpdate } from 'hooks/useStoreUpdate'
 import {
   MdBackpack as BackpackIcon,
   MdNotes as NoteIcon,
   MdStars as StarIcon,
 } from 'react-icons/md'
 
-export function CharacterInfoLayout() {
-  const { character, attributes } = useContext(metaContext)
+export function CharacterLayout() {
+  const { character, attributes } = useStoreUpdate()
 
   return (
     <div className='h-screen w-screen bg-slate2'>

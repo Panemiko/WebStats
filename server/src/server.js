@@ -42,6 +42,11 @@ io.on('connection', (socket) => {
     socket.emit('set-character', await getCharacter(characterId))
     socket.emit('set-attributes', await database.attribute.findMany())
     socket.emit('set-skills', await database.skill.findMany())
+
+    socket.on('update-character', ({ characterId, data }) => {
+      database.character.update({ where: { id: characterId }, data })
+      console.log(`> Character ${characterId} updated`)
+    })
   })
 
   socket.on('disconnect', () => {

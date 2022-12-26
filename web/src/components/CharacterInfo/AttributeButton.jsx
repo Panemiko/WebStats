@@ -1,17 +1,19 @@
-import { roomContext } from 'contexts/RoomContext'
-import { useCallback, useContext } from 'react'
+import { useAttributeHref } from 'hooks/useAttributeHref'
+import { useNavigation } from 'hooks/useNavigation'
+import { useNumberFormat } from 'hooks/useNumberFormat'
+import { useCallback } from 'react'
 
 export function AttributeButton(props) {
   const { level, tag, attributeId } = props
-  const { setRoom } = useContext(roomContext)
 
-  const formattedLevel = (level || 0).toLocaleString('en-US', {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  })
+  const { formatNumberToTwoDigits } = useNumberFormat()
+  const { navigateTo } = useNavigation()
+  const { getAttributeHref } = useAttributeHref()
+
+  const formattedLevel = formatNumberToTwoDigits(level || 0)
 
   const onClick = useCallback(() => {
-    setRoom({ layout: 'attribute', selector: attributeId })
+    navigateTo(getAttributeHref(attributeId))
   }, [])
 
   return (
