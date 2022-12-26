@@ -2,6 +2,7 @@ import 'styles/global.css'
 
 import { AttributePage } from 'pages/AttributePage'
 import { CharacterPage } from 'pages/CharacterPage'
+import { InventoryPage } from 'pages/InventoryPage'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/character/:characterId/inventory',
+    element: <InventoryPage />,
   },
   {
     path: '/character/:characterId/notes',

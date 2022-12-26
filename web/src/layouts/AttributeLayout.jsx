@@ -1,5 +1,7 @@
 import { Header } from 'components/List/Header'
 import { Item } from 'components/List/Item'
+import { ItemInfo } from 'components/List/ItemInfo'
+import { ItemList } from 'components/List/ItemList'
 import { SubTitle } from 'components/List/SubTitle'
 import { Title } from 'components/List/Title'
 import { useGetIdFromParam } from 'hooks/useGetIdFromParam'
@@ -23,17 +25,29 @@ export function AttributeLayout() {
         <Title>{attribute?.name}</Title>
         <SubTitle>
           {formatNumberToTwoDigits(
-            character?.attributes.find(
+            character?.attributes?.find(
               (attribute) => attribute.attributeId === attributeId
             )?.level || 0
           )}
         </SubTitle>
       </Header>
-      {skills
-        ?.filter((skill) => skill?.attributeId === attributeId)
-        ?.map((skill) => (
-          <Item key={skill?.id} name={skill?.name} />
-        ))}
+      <ItemList>
+        {skills
+          ?.filter((skill) => skill.attributeId === attributeId)
+          ?.map((skill) => (
+            <Item key={skill.id} name={skill.name}>
+              <div>
+                <ItemInfo>
+                  {formatNumberToTwoDigits(
+                    character?.skills?.find(
+                      (charSkill) => charSkill.skillId === skill.id
+                    )?.level || 0
+                  )}
+                </ItemInfo>
+              </div>
+            </Item>
+          ))}
+      </ItemList>
     </div>
   )
 }

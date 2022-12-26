@@ -36,9 +36,9 @@ export function CharacterLayout() {
         </div>
       </main>
       <div className='flex bg-mauve1 justify-between px-4 pb-12'>
-        <IconButton Icon={BackpackIcon} />
-        <IconButton Icon={StarIcon} />
-        <IconButton Icon={NoteIcon} />
+        <IconButton href='inventory' Icon={BackpackIcon} />
+        <IconButton href='' Icon={StarIcon} />
+        <IconButton href='' Icon={NoteIcon} />
       </div>
       <div className='py-8 px-4'>
         <h1 className='font-bold text-2xl text-cyan12 mb-8 text-center'>
