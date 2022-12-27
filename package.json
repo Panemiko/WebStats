@@ -6,9 +6,10 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "start": "yarn server start",
     "web": "yarn --cwd web dev",
-    "server": "yarn --cwd server dev",
-    "dev": "conc -p \"[{name}]\" -n \"SERVER,WEB\" -c \"bgBlue.bold,bgMagenta.bold\" \"yarn server\" \"yarn web\""
+    "server": "yarn --cwd server",
+    "dev": "conc -p \"[{name}]\" -n \"SERVER,WEB\" -c \"bgBlue.bold,bgMagenta.bold\" \"yarn server dev\" \"yarn web dev\""
   },
   "workspaces": [
     "server",
@@ -20,6 +21,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^8.0.0",
-    "prettier": "^2.8.1"
+    "prettier": "^2.8.1",
+    "yarn": "^1.22.19"
   }
 }

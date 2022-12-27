@@ -5,6 +5,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
+    "start": "node .",
     "dev": "nodemon .",
     "studio": "prisma studio",
     "generate": "prisma generate",
