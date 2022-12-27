@@ -15,6 +15,8 @@ import {
 export function CharacterLayout() {
   const { character, attributes } = useStoreUpdate()
 
+  console.log(attributes)
+
   return (
     <div className='h-screen w-screen bg-slate2'>
       <main className='py-12 px-4 bg-mauve1 grid grid-cols-5 '>
@@ -37,8 +39,8 @@ export function CharacterLayout() {
       </main>
       <div className='flex bg-mauve1 justify-between px-4 pb-12'>
         <IconButton href='inventory' Icon={BackpackIcon} />
-        <IconButton href='' Icon={StarIcon} />
-        <IconButton href='' Icon={NoteIcon} />
+        <IconButton href='abilities' Icon={StarIcon} />
+        <IconButton href='notes' Icon={NoteIcon} />
       </div>
       <div className='py-8 px-4'>
         <h1 className='font-bold text-2xl text-cyan12 mb-8 text-center'>

@@ -1,58 +1,20 @@
-import { PrismaClient } from '@prisma/client'
+import { config as dotenv } from 'dotenv'
 import express from 'express'
 import { createServer } from 'http'
-import { Server } from 'socket.io'
 
-const SERVER_PORT = 3000
+import { setupSocketServer } from './lib/socket.js'
 
+dotenv()
+
+// eslint-disable-next-line no-undef
+const SERVER_PORT = process.env.PORT || 3000
+
+// Create server
 const app = express()
 const server = createServer(app)
-const io = new Server(server, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST'],
-  },
-})
 
-const database = new PrismaClient()
-
-async function getCharacter(id) {
-  return await database.character.findUnique({
-    where: { id: parseInt(id) },
-    include: {
-      abilities: true,
-      attributes: true,
-      items: true,
-      skills: true,
-    },
-  })
-}
-
-io.on('connection', (socket) => {
-  console.log(`> New connection [${socket.id}]`)
-
-  socket.on('setup', async ({ characterId }) => {
-    if (typeof characterId !== 'number') {
-      console.log(`> Socket ${socket.id} using a invalid character id`)
-      return
-    }
-
-    console.log(`> Character ${characterId} loading`)
-
-    socket.emit('set-character', await getCharacter(characterId))
-    socket.emit('set-attributes', await database.attribute.findMany())
-    socket.emit('set-skills', await database.skill.findMany())
-
-    socket.on('update-character', ({ characterId, data }) => {
-      database.character.update({ where: { id: characterId }, data })
-      console.log(`> Character ${characterId} updated`)
-    })
-  })
-
-  socket.on('disconnect', () => {
-    console.log(`> Socket ${socket.id} disconnected`)
-  })
-})
+// Setup socket server and events
+setupSocketServer(server)
 
 server.listen(SERVER_PORT, () => {
   console.log(`> Server started on port ${SERVER_PORT}`)

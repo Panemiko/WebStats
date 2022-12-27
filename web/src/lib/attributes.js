@@ -4,10 +4,10 @@ export const attributesSlice = createSlice({
   name: 'attributes',
   initialState: [],
   reducers: {
-    setAttributes(state, action) {
+    setClientAttributes(state, action) {
       return action.payload.attributes
     },
   },
 })
 
-export const { setAttributes } = attributesSlice.actions
+export const { setClientAttributes } = attributesSlice.actions

@@ -1,25 +1,25 @@
-import { setAttributes } from 'lib/attributes'
-import { setCharacter } from 'lib/character'
-import { setSkills } from 'lib/skills'
+import { useGetIdFromParam } from 'hooks/useGetIdFromParam'
+import { setClientAttributes } from 'lib/attributes'
+import { setClientCharacter } from 'lib/character'
+import { setClientSkills } from 'lib/skills'
+import { getSocket } from 'lib/socket'
 import { store } from 'lib/store'
 import { useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { io } from 'socket.io-client'
-
-import { useGetIdFromParam } from './useGetIdFromParam'
-
-const WEBSOCKET_ADDRESS = 'ws://localhost:3000'
 
 export function useAppSetup() {
   const { getIdFromParam } = useGetIdFromParam()
 
+  // Get state from previous page
   const { state: previousPageState } = useLocation()
 
+  // Get state from current page
   const { character } = store.getState()
 
+  // Get character id from url
   const characterId = getIdFromParam('characterId')
 
-  const socket = io(WEBSOCKET_ADDRESS)
+  const socket = getSocket()
 
   // Default socket events
   useEffect(() => {
@@ -38,29 +38,31 @@ export function useAppSetup() {
     socket.on('set-character', (character) => {
       console.log(`Setting character to ${character.name}`)
 
-      store.dispatch(setCharacter({ character }))
+      store.dispatch(setClientCharacter({ character }))
     })
 
     socket.on('set-attributes', (attributes) => {
       console.log('Setting attributes')
 
-      store.dispatch(setAttributes({ attributes }))
+      store.dispatch(setClientAttributes({ attributes }))
     })
 
     socket.on('set-skills', (skills) => {
       console.log('Setting skills')
 
-      store.dispatch(setSkills({ skills }))
+      store.dispatch(setClientSkills({ skills }))
     })
   }, [])
 
   // Set the previous page data if no other was found
   if (previousPageState && !character.id) {
-    store.dispatch(setCharacter({ character: previousPageState.character }))
-    store.dispatch(setAttributes({ attributes: previousPageState.attributes }))
-    store.dispatch(setSkills({ skills: previousPageState.skills }))
-
-    console.log(store.getState())
+    store.dispatch(
+      setClientCharacter({ character: previousPageState.character })
+    )
+    store.dispatch(
+      setClientAttributes({ attributes: previousPageState.attributes })
+    )
+    store.dispatch(setClientSkills({ skills: previousPageState.skills }))
 
     return
   }

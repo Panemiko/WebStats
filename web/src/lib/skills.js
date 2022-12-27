@@ -4,10 +4,10 @@ export const skillsSlice = createSlice({
   name: 'skills',
   initialState: [],
   reducers: {
-    setSkills(state, action) {
+    setClientSkills(state, action) {
       return action.payload.skills
     },
   },
 })
 
-export const { setSkills } = skillsSlice.actions
+export const { setClientSkills } = skillsSlice.actions

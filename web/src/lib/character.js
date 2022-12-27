@@ -4,10 +4,10 @@ export const characterSlice = createSlice({
   name: 'character',
   initialState: {},
   reducers: {
-    setCharacter(state, action) {
+    setClientCharacter(state, action) {
       return action.payload.character
     },
   },
 })
 
-export const { setCharacter } = characterSlice.actions
+export const { setClientCharacter } = characterSlice.actions

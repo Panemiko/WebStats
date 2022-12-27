@@ -29,7 +29,7 @@ export function InventoryLayout() {
       <Header>
         <Title>Inventário</Title>
         <SubTitle color={totalWeight > character?.maxWeight && 'error'}>
-          {totalWeight}kg/{character?.maxWeight}kg
+          {totalWeight.toFixed(2)}kg/{character?.maxWeight}kg
         </SubTitle>
       </Header>
       <ItemList>
