@@ -35,19 +35,19 @@ export function useAppSetup() {
       console.error(err)
     })
 
-    socket.on('set-character', (character) => {
-      console.log(`Setting character to ${character.name}`)
+    socket.on('set-character', ({ character }) => {
+      console.log(`Setting character (${character.name})`)
 
       store.dispatch(setClientCharacter({ character }))
     })
 
-    socket.on('set-attributes', (attributes) => {
+    socket.on('set-attributes', ({ attributes }) => {
       console.log('Setting attributes')
 
       store.dispatch(setClientAttributes({ attributes }))
     })
 
-    socket.on('set-skills', (skills) => {
+    socket.on('set-skills', ({ skills }) => {
       console.log('Setting skills')
 
       store.dispatch(setClientSkills({ skills }))

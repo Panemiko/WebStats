@@ -35,7 +35,7 @@ export function InventoryLayout() {
       <ItemList>
         {character?.items?.map((item) => (
           <Item key={item.id} name={item.name}>
-            <div className='flex items-center gap-2'>
+            <div className='flex items-center gap-2 pl-2'>
               <ItemInfo variation={2}>{item.weight}kg</ItemInfo>
               <ItemInfo>{formatNumberToTwoDigits(item.quantity)}</ItemInfo>
             </div>

@@ -12,7 +12,7 @@ export class ClientInteractions {
 
   static byCharacterRoom(io, characterId) {
     return new ClientInteractions(
-      io.to(this.createCharacterRoomName(characterId)),
+      io.to(ClientInteractions.createCharacterRoomName(characterId)),
       characterId
     )
   }
@@ -32,10 +32,12 @@ export class ClientInteractions {
   }
 
   async setSkills() {
-    this.socket.emit('set-skills', { skills: getAllSkills() })
+    this.socket.emit('set-skills', { skills: await getAllSkills() })
   }
 
   async joinCharacterRoom() {
-    this.socket.join(this.createCharacterRoomName(this.characterId))
+    this.socket.join(
+      ClientInteractions.createCharacterRoomName(this.characterId)
+    )
   }
 }

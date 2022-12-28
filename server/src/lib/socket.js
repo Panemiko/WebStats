@@ -32,15 +32,21 @@ export function setupSocketServer(server) {
       await interactions.setAttributes()
       await interactions.setSkills()
 
-      socket.on('update-character', async ({ characterId, data }) => {
-        console.log(`> Updating character ${characterId}`)
+      socket.on(
+        'update-character',
+        async ({ characterId, data: { character } }) => {
+          console.log(`> Updating character ${characterId}`)
 
-        // Update character with new data
-        updateCharacter(characterId, data)
+          // Update character with new data
+          updateCharacter(characterId, character)
 
-        // Update character for all clients with the character
-        await ClientInteractions.byCharacterRoom(io, characterId).setCharacter()
-      })
+          // Update character for all clients with the character
+          await ClientInteractions.byCharacterRoom(
+            io,
+            characterId
+          ).setCharacter()
+        }
+      )
     })
 
     socket.on('disconnect', () => {

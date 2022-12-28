@@ -2,15 +2,22 @@ import { ActionButton } from 'components/List/ActionButton'
 import { Header } from 'components/List/Header'
 import { Title } from 'components/List/Title'
 import { useStoreUpdate } from 'hooks/useStoreUpdate'
+import { setNotes as setCharacterNotes } from 'lib/character'
+import { store } from 'lib/store'
 import { useEffect, useState } from 'react'
 
 export function NotesLayout() {
   const { character } = useStoreUpdate()
-  const [notes, setNotes] = useState('')
+  const [notes, setNotes] = useState()
 
   useEffect(() => {
-    setNotes(character?.notes)
-  }, [])
+    if (character.notes === notes) return
+    setNotes(character.notes)
+  }, [character])
+
+  function saveNotes() {
+    store.dispatch(setCharacterNotes({ notes }))
+  }
 
   return (
     <div>
@@ -24,7 +31,7 @@ export function NotesLayout() {
           setNotes(e.target.value)
         }}
       />
-      <ActionButton>SALVAR</ActionButton>
+      <ActionButton onClick={saveNotes}>SALVAR</ActionButton>
     </div>
   )
 }

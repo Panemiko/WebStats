@@ -15,8 +15,6 @@ import {
 export function CharacterLayout() {
   const { character, attributes } = useStoreUpdate()
 
-  console.log(attributes)
-
   return (
     <div className='h-screen w-screen bg-slate2'>
       <main className='py-12 px-4 bg-mauve1 grid grid-cols-5 '>
@@ -47,13 +45,13 @@ export function CharacterLayout() {
           ATRIBUTOS
         </h1>
         <div className='grid grid-cols-3'>
-          {attributes.map((attribute) => (
+          {attributes?.map((attribute) => (
             <div key={attribute.id} className='flex justify-center mb-10'>
               <AttributeButton
                 attributeId={attribute.id}
                 tag={attribute.tag}
                 level={
-                  character.attributes.find(
+                  character?.attributes?.find(
                     (charAttribute) =>
                       charAttribute.attributeId === attribute.id
                   )?.level || 0

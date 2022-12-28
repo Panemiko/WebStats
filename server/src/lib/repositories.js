@@ -26,6 +26,8 @@ export async function getAllSkills() {
 export async function updateCharacter(characterId, data) {
   return await database.character.update({
     where: { id: characterId },
-    data,
+    data: {
+      ...data,
+    },
   })
 }

@@ -7,7 +7,7 @@ export function Item(props) {
         children ? 'justify-between' : 'justify-start'
       }`}
     >
-      <span className='text-violet12 capitalize text-lg'>{name}</span>
+      <span className='text-violet12 capitalize break-all text-lg'>{name}</span>
       {children}
     </li>
   )
