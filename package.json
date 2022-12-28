@@ -1,0 +1,31 @@
+{
+  "name": "webstats",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "author": {
+    "email": "titoluccao@gmail.com",
+    "name": "Tito Lucca Oliveira"
+  },
+  "scripts": {
+    "dev": "conc -p \"[{name}]\" -n \"SERVER,WEB\" -c \"bgBlue.bold,bgMagenta.bold\" \"yarn server dev\" \"yarn web dev\"",
+    "server": "yarn --cwd server",
+    "web": "yarn --cwd web"
+  },
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "@typescript-eslint/parser": "^5.47.1",
+    "concurrently": "^7.6.0",
+    "eslint": "^8.30.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.11",
+    "eslint-plugin-simple-import-sort": "^8.0.0",
+    "prettier": "^2.8.1",
+    "yarn": "^1.22.19"
+  }
+}

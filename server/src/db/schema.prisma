@@ -1,0 +1,79 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Character {
+  id         Int                  @id @default(autoincrement())
+  name       String
+  age        Int
+  picture    String
+  level      Int
+  maxLife    Int
+  life       Int
+  maxSanity  Int
+  sanity     Int
+  maxWeight  Float
+  attributes CharacterAttribute[]
+  skills     CharacterSkill[]
+  abilities  Ability[]
+  items      Item[]
+  notes      String
+}
+
+model Attribute {
+  id                 Int                  @id @default(autoincrement())
+  name               String
+  tag                String
+  skills             Skill[]
+  charactersAttributes CharacterAttribute[]
+}
+
+model Skill {
+  id             Int              @id @default(autoincrement())
+  name           String
+  attribute      Attribute        @relation(fields: [attributeId], references: [id])
+  attributeId    Int
+  charactersSkills CharacterSkill[]
+}
+
+model CharacterAttribute {
+  id          Int       @id @default(autoincrement())
+  character   Character @relation(fields: [characterId], references: [id])
+  attribute   Attribute @relation(fields: [attributeId], references: [id])
+  level       Int
+  characterId Int
+  attributeId Int
+}
+
+model CharacterSkill {
+  id          Int       @id @default(autoincrement())
+  character   Character @relation(fields: [characterId], references: [id])
+  skill       Skill     @relation(fields: [skillId], references: [id])
+  level       Int
+  characterId Int
+  skillId     Int
+}
+
+model Ability {
+  id          Int       @id @default(autoincrement())
+  character   Character @relation(fields: [characterId], references: [id])
+  name        String
+  characterId Int
+}
+
+model Item {
+  id          Int       @id @default(autoincrement())
+  character   Character @relation(fields: [characterId], references: [id])
+  name        String
+  weight      Float
+  quantity    Int
+  characterId Int
+}
