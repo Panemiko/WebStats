@@ -35,13 +35,13 @@ export function useSetup() {
       console.error(err)
     })
 
-    socket.on('set-character', ({ character }) => {
+    socket.on('setCharacter', ({ character }) => {
       console.log(`Setting character (${character.name})`)
 
       store.dispatch(setCharacter({ character }))
     })
 
-    socket.on('set-meta', ({ meta }) => {
+    socket.on('setMeta', ({ meta }) => {
       console.log('Setting meta')
 
       store.dispatch(setMeta({ meta }))

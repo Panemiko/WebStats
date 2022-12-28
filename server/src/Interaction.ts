@@ -1,8 +1,13 @@
-import type { Character } from '@prisma/client'
+import type { Ability, Character, Item } from '@prisma/client'
 import { AttributeRepository } from 'repositories/Attribute'
 import { CharacterRepository } from 'repositories/Character'
+import { CharacterAttributeRepository } from 'repositories/CharacterAttribute'
+import { CharacterSkillRepository } from 'repositories/CharacterSkill'
+import { ItemRepository } from 'repositories/Item'
 import { SkillRepository } from 'repositories/Skill'
 import type { Server, Socket } from 'socket.io'
+
+import { AbilityRepository } from './repositories/Ability'
 
 export class Interaction {
   constructor(private socket: Socket, private characterId: number) {}
@@ -19,14 +24,112 @@ export class Interaction {
     return await CharacterRepository.updateCharacterById(this.characterId, data)
   }
 
+  async updateCharacterNotes(notes: string) {
+    return this.updateCharacter({
+      notes,
+    })
+  }
+
+  async updateCharacterLevel(level: number) {
+    return this.updateCharacter({
+      level,
+    })
+  }
+
+  async updateCharacterLife(life: number) {
+    return this.updateCharacter({
+      life,
+    })
+  }
+
+  async updateCharacterMaxLife(maxLife: number) {
+    return this.updateCharacter({
+      maxLife,
+    })
+  }
+
+  async updateCharacterSanity(sanity: number) {
+    return this.updateCharacter({
+      sanity,
+    })
+  }
+
+  async updateCharacterMaxSanity(maxSanity: number) {
+    return this.updateCharacter({
+      maxSanity,
+    })
+  }
+
+  async updateCharacterAttributeLevel(attributeId: number, level: number) {
+    const character = await this.getCharacter()
+
+    const characterAttribute = character?.attributes.find(
+      (characterAttribute) => characterAttribute.attributeId === attributeId
+    )
+
+    if (characterAttribute?.id) {
+      CharacterAttributeRepository.updateCharacterAttributeLevel(
+        characterAttribute.id,
+        level
+      )
+
+      return
+    }
+
+    CharacterAttributeRepository.createCharacterAttribute(
+      this.characterId,
+      attributeId,
+      level
+    )
+  }
+
+  async updateCharacterSkillLevel(skillId: number, level: number) {
+    const character = await this.getCharacter()
+
+    const characterSkill = character?.skills.find(
+      (characterSkill) => characterSkill.skillId === skillId
+    )
+
+    if (characterSkill?.id) {
+      await CharacterSkillRepository.updateCharacterSkillLevel(
+        characterSkill.id,
+        level
+      )
+
+      return
+    }
+
+    await CharacterSkillRepository.createCharacterSkill(
+      this.characterId,
+      skillId,
+      level
+    )
+  }
+
+  async addCharacterItem(name: string, weight: number, quantity: number) {
+    await ItemRepository.createItem(this.characterId, name, weight, quantity)
+  }
+
+  async updateCharacterItem(data: Partial<Item>) {
+    await ItemRepository.updateItem(this.characterId, data)
+  }
+
+  async addCharacterAbility(name: string) {
+    await AbilityRepository.createAbility(this.characterId, name)
+  }
+
+  async updateCharacterAbility(data: Partial<Ability>) {
+    await AbilityRepository.updateAbility(this.characterId, data)
+  }
+
   async setCharacter() {
-    this.socket.emit('set-character', {
+    this.socket.emit('setCharacter', {
       character: await this.getCharacter(),
     })
   }
 
   async setMeta() {
-    this.socket.emit('set-meta', {
+    this.socket.emit('setMeta', {
       meta: {
         attributes: await AttributeRepository.getAllAttributes(),
         skills: await SkillRepository.getAllSkills(),
@@ -40,8 +143,8 @@ export class Interaction {
 
   async setClientRoomCharacter(io: Server) {
     io.to(this.getCharacterRoomName()).emit(
-      'set-character',
-      this.getCharacter()
+      'setCharacter',
+      await this.getCharacter()
     )
   }
 }
