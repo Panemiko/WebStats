@@ -2,7 +2,8 @@ import { config as dotenv } from 'dotenv'
 import express from 'express'
 import { createServer } from 'http'
 import type { AddressInfo } from 'net'
-import { createSocketServer } from 'socket'
+
+import { createSocketServer } from './socket'
 
 dotenv()
 

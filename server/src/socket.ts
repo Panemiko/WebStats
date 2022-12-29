@@ -1,7 +1,8 @@
 import type { Ability, Attribute, Character, Item, Skill } from '@prisma/client'
 import type { Server as HTTPServer } from 'http'
-import { Interaction } from 'Interaction'
 import { Server } from 'socket.io'
+
+import { Interaction } from './Interaction'
 
 export interface ServerToClientEvents {
   setCharacter(params: { character: Character }): any

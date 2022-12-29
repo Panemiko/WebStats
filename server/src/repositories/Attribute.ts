@@ -1,4 +1,4 @@
-import { database } from 'db/client'
+import { database } from '../db/client'
 
 export class AttributeRepository {
   static async getAllAttributes() {

@@ -1,13 +1,19 @@
-import type { Ability, Character, Item } from '@prisma/client'
-import { AttributeRepository } from 'repositories/Attribute'
-import { CharacterRepository } from 'repositories/Character'
-import { CharacterAttributeRepository } from 'repositories/CharacterAttribute'
-import { CharacterSkillRepository } from 'repositories/CharacterSkill'
-import { ItemRepository } from 'repositories/Item'
-import { SkillRepository } from 'repositories/Skill'
+import type {
+  Ability,
+  Character,
+  CharacterAttribute,
+  CharacterSkill,
+  Item,
+} from '@prisma/client'
 import type { Server, Socket } from 'socket.io'
 
 import { AbilityRepository } from './repositories/Ability'
+import { AttributeRepository } from './repositories/Attribute'
+import { CharacterRepository } from './repositories/Character'
+import { CharacterAttributeRepository } from './repositories/CharacterAttribute'
+import { CharacterSkillRepository } from './repositories/CharacterSkill'
+import { ItemRepository } from './repositories/Item'
+import { SkillRepository } from './repositories/Skill'
 
 export class Interaction {
   constructor(private socket: Socket, private characterId: number) {}
@@ -64,7 +70,8 @@ export class Interaction {
     const character = await this.getCharacter()
 
     const characterAttribute = character?.attributes.find(
-      (characterAttribute) => characterAttribute.attributeId === attributeId
+      (characterAttribute: CharacterAttribute) =>
+        characterAttribute.attributeId === attributeId
     )
 
     if (characterAttribute?.id) {
@@ -87,7 +94,7 @@ export class Interaction {
     const character = await this.getCharacter()
 
     const characterSkill = character?.skills.find(
-      (characterSkill) => characterSkill.skillId === skillId
+      (characterSkill: CharacterSkill) => characterSkill.skillId === skillId
     )
 
     if (characterSkill?.id) {

@@ -1,5 +1,6 @@
 import type { Character } from '@prisma/client'
-import { database } from 'db/client'
+
+import { database } from '../db/client'
 
 export class CharacterRepository {
   static async getCharacterById(characterId: number) {

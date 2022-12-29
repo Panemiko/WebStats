@@ -1,5 +1,6 @@
 import type { Item } from '@prisma/client'
-import { database } from 'db/client'
+
+import { database } from '../db/client'
 
 export class ItemRepository {
   static async createItem(
