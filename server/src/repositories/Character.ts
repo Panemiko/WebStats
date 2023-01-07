@@ -22,6 +22,12 @@ export class CharacterRepository {
     return await database.character.update({
       where: { id: characterId },
       data,
+      include: {
+        abilities: true,
+        attributes: true,
+        items: true,
+        skills: true,
+      },
     })
   }
 }

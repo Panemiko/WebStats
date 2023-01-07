@@ -65,62 +65,64 @@ export async function createSocketServer(server: HTTPServer) {
 
       async function updateCharacter(updateFunction: (...params: any) => any) {
         console.log(`> Updating character ${characterId} [${socket.id}]`)
-        updateFunction()
         console.log(`> Setting character to other clients [${socket.id}]`)
-        await interaction.setClientRoomCharacter(io)
+        await interaction.setClientRoomCharacter(io, await updateFunction())
       }
 
-      socket.on('updateCharacterNotes', ({ notes }) => {
-        updateCharacter(() => {
-          interaction.updateCharacterNotes(notes)
+      socket.on('updateCharacterNotes', async ({ notes }) => {
+        updateCharacter(async () => {
+          return await interaction.updateCharacterNotes(notes)
         })
       })
 
-      socket.on('updateCharacterLevel', ({ level }) => {
-        updateCharacter(() => {
-          interaction.updateCharacterLevel(level)
+      socket.on('updateCharacterLevel', async ({ level }) => {
+        updateCharacter(async () => {
+          return await interaction.updateCharacterLevel(level)
         })
       })
 
       socket.on('updateCharacterLife', ({ life }) => {
-        updateCharacter(() => {
-          interaction.updateCharacterLife(life)
+        updateCharacter(async () => {
+          return await interaction.updateCharacterLife(life)
         })
       })
 
       socket.on(
         'updateCharacterMaxlife',
         ({ maxLife }: { maxLife: number }) => {
-          updateCharacter(() => {
-            interaction.updateCharacterMaxLife(maxLife)
+          updateCharacter(async () => {
+            await interaction.updateCharacterMaxLife(maxLife)
           })
         }
       )
 
       socket.on('updateCharacterSanity', ({ sanity }) => {
-        updateCharacter(() => {
-          interaction.updateCharacterSanity(sanity)
+        updateCharacter(async () => {
+          return await interaction.updateCharacterSanity(sanity)
         })
       })
 
       socket.on(
         'updateCharacterMaxSanity',
         ({ maxSanity }: { maxSanity: number }) => {
-          updateCharacter(() => {
-            interaction.updateCharacterMaxSanity(maxSanity)
+          updateCharacter(async () => {
+            await interaction.updateCharacterMaxSanity(maxSanity)
           })
         }
       )
 
       socket.on('updateCharacterAttributeLevel', ({ attributeId, level }) => {
-        updateCharacter(() => {
-          interaction.updateCharacterAttributeLevel(attributeId, level)
+        updateCharacter(async () => {
+          return await interaction.updateCharacterAttributeLevel(
+            attributeId,
+            level
+          )
         })
       })
 
       socket.on('updateCharacterSkillLevel', ({ skillId, level }) => {
-        updateCharacter(() => {
-          interaction.updateCharacterSkillLevel(skillId, level)
+        updateCharacter(async () => {
+          return await interaction.updateCharacterSkillLevel(skillId, level)
         })
       })
 
@@ -135,27 +137,27 @@ export async function createSocketServer(server: HTTPServer) {
           weight: number
           quantity: number
         }) => {
-          updateCharacter(() => {
-            interaction.addCharacterItem(name, weight, quantity)
+          updateCharacter(async () => {
+            await interaction.addCharacterItem(name, weight, quantity)
           })
         }
       )
 
       socket.on('updateCharacterItem', (data) => {
-        updateCharacter(() => {
-          interaction.updateCharacterItem(data)
+        updateCharacter(async () => {
+          return await interaction.updateCharacterItem(data)
         })
       })
 
       socket.on('addCharacterAbility', ({ name }) => {
-        updateCharacter(() => {
-          interaction.addCharacterAbility(name)
+        updateCharacter(async () => {
+          return await interaction.addCharacterAbility(name)
         })
       })
 
       socket.on('updateCharacterAbility', (data) => {
-        updateCharacter(() => {
-          interaction.updateCharacterAbility(data)
+        updateCharacter(async () => {
+          return await interaction.updateCharacterAbility(data)
         })
       })
     })

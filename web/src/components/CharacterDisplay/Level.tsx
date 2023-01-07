@@ -1,15 +1,48 @@
+import { useDialog } from 'hooks/useDialog'
 import { useNumberFormat } from 'hooks/useNumberFormat'
+import { useStoreUpdate } from 'hooks/useStoreUpdate'
+import { useCallback } from 'react'
 
-interface LevelProps {
-  level: number
-}
-
-export function Level(props: LevelProps) {
-  const { level } = props
-
+export function Level() {
+  const { character } = useStoreUpdate()
   const { toTwoDigits } = useNumberFormat()
+  const {
+    addFormInput,
+    resetDialog,
+    setDialogTitle,
+    toggleDialog,
+    setFormSubmitAction,
+    setFormSubmitFunction,
+  } = useDialog()
 
-  const formattedLevel = toTwoDigits(level)
+  const editLevel = useCallback(() => {
+    resetDialog()
 
-  return <span className='text-cyan11 uppercase'>LVL {formattedLevel}</span>
+    setDialogTitle('Editar Level')
+    addFormInput({
+      id: 'level',
+      name: 'level',
+      placeholder: 'Level',
+      type: 'number',
+      label: 'Level',
+      defaultValue: character.level.toString(),
+    })
+    setFormSubmitAction('Editar')
+    setFormSubmitFunction((state, socket) => {
+      const level = parseInt(
+        state.dialog.content.inputs.find((input) => input.id === 'level')?.value
+      )
+
+      console.log('Updating character level')
+      socket.emit('updateCharacterLevel', { level })
+    })
+
+    toggleDialog()
+  }, [character.level])
+
+  return (
+    <span className='text-cyan11 uppercase outline-none'>
+      LVL <span onClick={editLevel}>{toTwoDigits(character.level || 0)}</span>
+    </span>
+  )
 }

@@ -1,4 +1,5 @@
-import { ActionButton } from 'components/List/ActionButton'
+import { Dialog } from 'components/Dialog'
+import { ActionButton } from 'components/ActionButton'
 import { Header } from 'components/List/Header'
 import { Item } from 'components/List/Item'
 import { ItemList } from 'components/List/ItemList'
@@ -13,6 +14,7 @@ export function AbilitiesPage() {
 
   return (
     <div>
+      <Dialog />
       <Header>
         <Title>Habilidades</Title>
       </Header>

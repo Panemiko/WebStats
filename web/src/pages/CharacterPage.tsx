@@ -5,6 +5,7 @@ import { Information } from 'components/CharacterDisplay/Information'
 import { Level } from 'components/CharacterDisplay/Level'
 import { Life } from 'components/CharacterDisplay/Life'
 import { Sanity } from 'components/CharacterDisplay/Sanity'
+import { Dialog } from 'components/Dialog'
 import { useSetup } from 'hooks/useSetup'
 import { useStoreUpdate } from 'hooks/useStoreUpdate'
 import {
@@ -23,14 +24,15 @@ export function CharacterPage() {
 
   return (
     <div className='h-screen w-screen bg-slate2'>
+      <Dialog />
       <main className='py-12 px-4 bg-mauve1 grid grid-cols-5 '>
         <div className='col-start-1 col-end-4'>
           <div className='flex flex-col mb-6'>
-            <Level level={character.level || 0} />
+            <Level />
             <Information name={character.name} age={character.age} />
           </div>
           <div className='flex flex-col gap-2'>
-            <Life life={character.life || 0} maxLife={character.maxLife} />
+            <Life />
             <Sanity
               sanity={character.sanity || 0}
               maxSanity={character.maxSanity}

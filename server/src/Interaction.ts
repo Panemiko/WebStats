@@ -31,37 +31,37 @@ export class Interaction {
   }
 
   async updateCharacterNotes(notes: string) {
-    return this.updateCharacter({
+    return await this.updateCharacter({
       notes,
     })
   }
 
   async updateCharacterLevel(level: number) {
-    return this.updateCharacter({
+    return await this.updateCharacter({
       level,
     })
   }
 
   async updateCharacterLife(life: number) {
-    return this.updateCharacter({
+    return await this.updateCharacter({
       life,
     })
   }
 
   async updateCharacterMaxLife(maxLife: number) {
-    return this.updateCharacter({
+    return await this.updateCharacter({
       maxLife,
     })
   }
 
   async updateCharacterSanity(sanity: number) {
-    return this.updateCharacter({
+    return await this.updateCharacter({
       sanity,
     })
   }
 
   async updateCharacterMaxSanity(maxSanity: number) {
-    return this.updateCharacter({
+    return await this.updateCharacter({
       maxSanity,
     })
   }
@@ -148,10 +148,17 @@ export class Interaction {
     this.socket.join(this.getCharacterRoomName())
   }
 
-  async setClientRoomCharacter(io: Server) {
-    io.to(this.getCharacterRoomName()).emit(
-      'setCharacter',
-      await this.getCharacter()
-    )
+  async setClientRoomCharacter(
+    io: Server,
+    character?: Character & {
+      abilities: Ability[]
+      attributes: CharacterAttribute[]
+      items: Item[]
+      skills: CharacterSkill[]
+    }
+  ) {
+    io.to(this.getCharacterRoomName()).emit('setCharacter', {
+      character: character || (await this.getCharacter()),
+    })
   }
 }

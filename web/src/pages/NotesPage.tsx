@@ -1,8 +1,9 @@
-import { ActionButton } from 'components/List/ActionButton'
+import { ActionButton } from 'components/ActionButton'
 import { Header } from 'components/List/Header'
 import { Title } from 'components/List/Title'
 import { useSetup } from 'hooks/useSetup'
 import { useStoreUpdate } from 'hooks/useStoreUpdate'
+import { getSocket } from 'lib/socket'
 import { useEffect, useState } from 'react'
 
 export function NotesPage() {
@@ -13,23 +14,31 @@ export function NotesPage() {
 
   useEffect(() => {
     if (character.notes === notes) return
+    setNotes(character.notes)
   }, [character])
 
-  function saveNotes() {}
+  function saveNotes() {
+    console.log('Updating character notes')
+    const socket = getSocket()
+
+    socket.emit('updateCharacterNotes', { notes })
+  }
 
   return (
     <div>
       <Header>
         <Title>Anotações</Title>
       </Header>
-      <input
-        className='mx-5 h-[stretch] bg-violet3 hover:bg-violet4 focus:bg-violet5 rounded-xl w-[stretch] text-lg px-3 py-5 text-violet12 mb-6 outline-none '
-        value={notes}
-        onChange={(e) => {
-          setNotes(e.target.value)
-        }}
-      />
-      <ActionButton onClick={saveNotes}>SALVAR</ActionButton>
+      <div className='px-5'>
+        <input
+          className='h-[stretch] bg-violet3 hover:bg-violet4 focus:bg-violet5 rounded-xl px-3 w-[stretch] text-lg py-5 text-violet12 mb-6 outline-none '
+          value={notes}
+          onChange={(e) => {
+            setNotes(e.target.value)
+          }}
+        />
+        <ActionButton onClick={saveNotes}>SALVAR</ActionButton>
+      </div>
     </div>
   )
 }

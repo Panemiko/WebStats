@@ -1,4 +1,5 @@
-import { ActionButton } from 'components/List/ActionButton'
+import { Dialog } from 'components/Dialog'
+import { ActionButton } from 'components/ActionButton'
 import { Header } from 'components/List/Header'
 import { Item } from 'components/List/Item'
 import { ItemInfo } from 'components/List/ItemInfo'
@@ -29,6 +30,7 @@ export function InventoryPage() {
 
   return (
     <div>
+      <Dialog />
       <Header>
         <Title>Inventário</Title>
         <SubTitle

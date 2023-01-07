@@ -29,18 +29,18 @@ model Character {
 }
 
 model Attribute {
-  id                 Int                  @id @default(autoincrement())
-  name               String
-  tag                String
-  skills             Skill[]
+  id                   Int                  @id @default(autoincrement())
+  name                 String
+  tag                  String
+  skills               Skill[]
   charactersAttributes CharacterAttribute[]
 }
 
 model Skill {
-  id             Int              @id @default(autoincrement())
-  name           String
-  attribute      Attribute        @relation(fields: [attributeId], references: [id])
-  attributeId    Int
+  id               Int              @id @default(autoincrement())
+  name             String
+  attribute        Attribute        @relation(fields: [attributeId], references: [id])
+  attributeId      Int
   charactersSkills CharacterSkill[]
 }
 
@@ -66,6 +66,7 @@ model Ability {
   id          Int       @id @default(autoincrement())
   character   Character @relation(fields: [characterId], references: [id])
   name        String
+  level       Int
   characterId Int
 }
 

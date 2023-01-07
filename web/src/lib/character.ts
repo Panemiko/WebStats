@@ -19,10 +19,6 @@ export const characterSlice = createSlice({
     setCharacter(state, action: Action<{ character: Character }>) {
       return action.payload.character
     },
-    updateCharacterNotes(state, action: Action<{ notes: string }>) {
-      const socket = getSocket()
-      socket.emit('updateCharacterNotes', action.payload)
-    },
     updateCharacterLevel(state, action: Action<{ level: number }>) {
       const socket = getSocket()
       socket.emit('updateCharacterLevel', action.payload)
@@ -75,6 +71,10 @@ export const characterSlice = createSlice({
     updateCharacterAbility(state, action: Action<Partial<Ability>>) {
       const socket = getSocket()
       socket.emit('updateCharacterItem', action.payload)
+    },
+    updateCharacterNotes(state, action: Action<{ notes: string }>) {
+      const socket = getSocket()
+      socket.emit('updateCharacterNotes', action.payload)
     },
   },
 })

@@ -1,3 +1,4 @@
+import { Dialog } from 'components/Dialog'
 import { Header } from 'components/List/Header'
 import { Item } from 'components/List/Item'
 import { ItemInfo } from 'components/List/ItemInfo'
@@ -27,6 +28,7 @@ export function AttributePage() {
 
   return (
     <div>
+      <Dialog />
       <Header>
         <Title>{attributeLoaded?.name as string}</Title>
         <SubTitle>
