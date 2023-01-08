@@ -5,10 +5,16 @@ import { useDialog } from 'hooks/useDialog'
 import { useStoreUpdate } from 'hooks/useStoreUpdate'
 import { getSocket } from 'lib/socket'
 import { deserializeFunction, store } from 'lib/store'
+import { useCallback } from 'react'
 
 export function Dialog() {
   const { dialog } = useStoreUpdate()
   const { toggleDialog, setInputValue } = useDialog()
+
+  const handleSubmit = useCallback(() => {
+    toggleDialog()
+    deserializeFunction(dialog.content.onSubmit)(store.getState(), getSocket())
+  }, [dialog])
 
   return (
     <DialogPrimitive.Root open={dialog.open} onOpenChange={toggleDialog}>
@@ -26,7 +32,13 @@ export function Dialog() {
                 </DialogPrimitive.Description>
               )}
             </div>
-            <div>
+            <div
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSubmit()
+                }
+              }}
+            >
               {dialog.content.inputs.map((input, index) => (
                 <label key={index} htmlFor={input.id}>
                   {input.label}
@@ -40,15 +52,7 @@ export function Dialog() {
                   />
                 </label>
               ))}
-              <ActionButton
-                onClick={() => {
-                  toggleDialog()
-                  deserializeFunction(dialog.content.onSubmit)(
-                    store.getState(),
-                    getSocket()
-                  )
-                }}
-              >
+              <ActionButton onClick={handleSubmit}>
                 {dialog.content.submitAction}
               </ActionButton>
             </div>

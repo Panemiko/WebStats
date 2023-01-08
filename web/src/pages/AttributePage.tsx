@@ -44,7 +44,7 @@ export function AttributePage() {
   const editLevel = useCallback(() => {
     resetDialog()
 
-    setDialogTitle(`Editar Level de ${attributeLoaded?.name}`)
+    setDialogTitle(`Editar Level (${attributeLoaded?.name})`)
     addFormInput({
       id: 'attributeId',
       name: 'attributeId',
