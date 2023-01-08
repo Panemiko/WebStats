@@ -144,8 +144,8 @@ export class Interaction {
     await ItemRepository.updateItem(this.characterId, data)
   }
 
-  async addCharacterAbility(name: string) {
-    await AbilityRepository.createAbility(this.characterId, name)
+  async addCharacterAbility(name: string, level: number) {
+    await AbilityRepository.createAbility(this.characterId, name, level)
   }
 
   async updateCharacterAbility(data: Partial<Ability>) {

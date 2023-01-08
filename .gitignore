@@ -22,3 +22,5 @@ yarn-error.log*
 .vercel
 
 yarn-error.log
+
+dump.sql

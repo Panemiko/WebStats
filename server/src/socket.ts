@@ -28,7 +28,7 @@ export interface ClientToServerEvents {
     quantity: number
   }): any
   updateCharacterItem(params: Partial<Item>): any
-  addCharacterAbility(params: { name: string }): any
+  addCharacterAbility(params: { name: string; level: number }): any
   updateCharacterAbility(params: Partial<Ability>): any
 }
 
@@ -132,9 +132,9 @@ export async function createSocketServer(server: HTTPServer) {
         })
       })
 
-      socket.on('addCharacterAbility', ({ name }) => {
+      socket.on('addCharacterAbility', ({ name, level }) => {
         updateCharacter(async () => {
-          return await interaction.addCharacterAbility(name)
+          return await interaction.addCharacterAbility(name, level)
         })
       })
 

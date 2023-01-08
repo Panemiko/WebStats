@@ -3,9 +3,9 @@ import type { Ability } from '@prisma/client'
 import { database } from '../db/client'
 
 export class AbilityRepository {
-  static async createAbility(characterId: number, name: string) {
+  static async createAbility(characterId: number, name: string, level: number) {
     return await database.ability.create({
-      data: { name, characterId },
+      data: { name, characterId, level },
     })
   }
 
