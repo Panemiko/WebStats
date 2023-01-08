@@ -20,10 +20,10 @@ export function Dialog() {
     <DialogPrimitive.Root open={dialog.open} onOpenChange={toggleDialog}>
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className='bg-violet12 fixed inset-0 opacity-20' />
-        <div className='fixed inset-0 flex items-center justify-center'>
-          <DialogPrimitive.Content className='bg-slate2 z-10 rounded-lg text-slate11 py-8 px-5 mx-6 w-[stretch] outline-none min-h-[40vh]'>
+        <div className='fixed inset-0 flex justify-center px-6 py-8'>
+          <DialogPrimitive.Content className='bg-slate2 z-10 rounded-lg text-slate11 py-12 px-5 w-[stretch] h-fit outline-none'>
             <div className='mb-10'>
-              <DialogPrimitive.Title className='text-violet12 font-bold text-3xl capitalize'>
+              <DialogPrimitive.Title className='text-violet12 font-bold text-2xl capitalize'>
                 {dialog.title}
               </DialogPrimitive.Title>
               {dialog.description && (
