@@ -87,14 +87,11 @@ export async function createSocketServer(server: HTTPServer) {
         })
       })
 
-      socket.on(
-        'updateCharacterMaxlife',
-        ({ maxLife }: { maxLife: number }) => {
-          updateCharacter(async () => {
-            await interaction.updateCharacterMaxLife(maxLife)
-          })
-        }
-      )
+      socket.on('updateCharacterMaxlife', ({ maxLife }) => {
+        updateCharacter(async () => {
+          return await interaction.updateCharacterMaxLife(maxLife)
+        })
+      })
 
       socket.on('updateCharacterSanity', ({ sanity }) => {
         updateCharacter(async () => {
@@ -102,14 +99,11 @@ export async function createSocketServer(server: HTTPServer) {
         })
       })
 
-      socket.on(
-        'updateCharacterMaxSanity',
-        ({ maxSanity }: { maxSanity: number }) => {
-          updateCharacter(async () => {
-            await interaction.updateCharacterMaxSanity(maxSanity)
-          })
-        }
-      )
+      socket.on('updateCharacterMaxSanity', ({ maxSanity }) => {
+        updateCharacter(async () => {
+          return await interaction.updateCharacterMaxSanity(maxSanity)
+        })
+      })
 
       socket.on('updateCharacterAttributeLevel', ({ attributeId, level }) => {
         updateCharacter(async () => {
@@ -126,22 +120,11 @@ export async function createSocketServer(server: HTTPServer) {
         })
       })
 
-      socket.on(
-        'addCharacterItem',
-        ({
-          name,
-          weight,
-          quantity,
-        }: {
-          name: string
-          weight: number
-          quantity: number
-        }) => {
-          updateCharacter(async () => {
-            await interaction.addCharacterItem(name, weight, quantity)
-          })
-        }
-      )
+      socket.on('addCharacterItem', ({ name, weight, quantity }) => {
+        updateCharacter(async () => {
+          return await interaction.addCharacterItem(name, weight, quantity)
+        })
+      })
 
       socket.on('updateCharacterItem', (data) => {
         updateCharacter(async () => {

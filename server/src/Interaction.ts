@@ -23,7 +23,14 @@ export class Interaction {
   }
 
   async getCharacter() {
-    return await CharacterRepository.getCharacterById(this.characterId)
+    return (await CharacterRepository.getCharacterById(
+      this.characterId
+    )) as Character & {
+      abilities: Ability[]
+      attributes: CharacterAttribute[]
+      items: Item[]
+      skills: CharacterSkill[]
+    }
   }
 
   async updateCharacter(data: Partial<Character>) {
@@ -69,48 +76,64 @@ export class Interaction {
   async updateCharacterAttributeLevel(attributeId: number, level: number) {
     const character = await this.getCharacter()
 
-    const characterAttribute = character?.attributes.find(
+    const characterAttribute = character.attributes.find(
       (characterAttribute: CharacterAttribute) =>
         characterAttribute.attributeId === attributeId
     )
 
     if (characterAttribute?.id) {
-      CharacterAttributeRepository.updateCharacterAttributeLevel(
-        characterAttribute.id,
+      const updatedAttribute =
+        await CharacterAttributeRepository.updateCharacterAttributeLevel(
+          characterAttribute.id,
+          level
+        )
+
+      character.attributes[character.attributes.indexOf(characterAttribute)] =
+        updatedAttribute
+
+      return character
+    }
+
+    const createdAttribute =
+      await CharacterAttributeRepository.createCharacterAttribute(
+        this.characterId,
+        attributeId,
         level
       )
 
-      return
-    }
+    character.attributes.push(createdAttribute)
 
-    CharacterAttributeRepository.createCharacterAttribute(
-      this.characterId,
-      attributeId,
-      level
-    )
+    return character
   }
 
   async updateCharacterSkillLevel(skillId: number, level: number) {
     const character = await this.getCharacter()
 
-    const characterSkill = character?.skills.find(
+    const characterSkill = character.skills.find(
       (characterSkill: CharacterSkill) => characterSkill.skillId === skillId
     )
 
     if (characterSkill?.id) {
-      await CharacterSkillRepository.updateCharacterSkillLevel(
-        characterSkill.id,
-        level
-      )
+      const updatedSkill =
+        await CharacterSkillRepository.updateCharacterSkillLevel(
+          characterSkill.id,
+          level
+        )
 
-      return
+      character.skills[character.skills.indexOf(characterSkill)] = updatedSkill
+
+      return character
     }
 
-    await CharacterSkillRepository.createCharacterSkill(
+    const createdSkill = await CharacterSkillRepository.createCharacterSkill(
       this.characterId,
       skillId,
       level
     )
+
+    character.skills.push(createdSkill)
+
+    return character
   }
 
   async addCharacterItem(name: string, weight: number, quantity: number) {

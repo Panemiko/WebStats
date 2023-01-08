@@ -1,14 +1,15 @@
 import { Dialog } from 'components/Dialog'
 import { Header } from 'components/List/Header'
-import { Item } from 'components/List/Item'
-import { ItemInfo } from 'components/List/ItemInfo'
 import { ItemList } from 'components/List/ItemList'
+import { Skill } from 'components/List/Skill'
 import { SubTitle } from 'components/List/SubTitle'
 import { Title } from 'components/List/Title'
+import { useDialog } from 'hooks/useDialog'
 import { useGetLinkId } from 'hooks/useGetLinkId'
 import { useNumberFormat } from 'hooks/useNumberFormat'
 import { useSetup } from 'hooks/useSetup'
 import { useStoreUpdate } from 'hooks/useStoreUpdate'
+import { useCallback, useMemo } from 'react'
 
 export function AttributePage() {
   useSetup()
@@ -19,41 +20,82 @@ export function AttributePage() {
     character,
     meta: { attributes, skills },
   } = useStoreUpdate()
+  const {
+    addFormInput,
+    resetDialog,
+    setDialogTitle,
+    toggleDialog,
+    setFormSubmitAction,
+    setFormSubmitFunction,
+  } = useDialog()
 
   const attributeId = getIdFromLink('attributeId')
 
-  const attributeLoaded = attributes.find(
-    (attribute) => attribute.id === attributeId
-  )
+  const attributeLoaded = useMemo(() => {
+    return attributes?.find((attribute) => attribute.id === attributeId)
+  }, [attributes])
+
+  const characterAttributeLoaded = useMemo(() => {
+    return character?.attributes?.find(
+      (attribute) => attribute.attributeId === attributeId
+    )
+  }, [character])
+
+  const editLevel = useCallback(() => {
+    resetDialog()
+
+    setDialogTitle(`Editar Level de ${attributeLoaded?.name}`)
+    addFormInput({
+      id: 'attributeId',
+      name: 'attributeId',
+      placeholder: '',
+      type: 'hidden',
+      label: '',
+      defaultValue: attributeLoaded?.id.toString() || '0',
+    })
+    addFormInput({
+      id: 'attributeLevel',
+      name: 'attributeLevel',
+      placeholder: 'Level de Atributo',
+      type: 'number',
+      label: 'Level de Atributo',
+      defaultValue: characterAttributeLoaded?.level.toString() || '0',
+    })
+    setFormSubmitAction('Editar')
+    setFormSubmitFunction((state, socket) => {
+      const attributeId = parseInt(
+        state.dialog.content.inputs.find((input) => input.id === 'attributeId')
+          ?.value
+      )
+
+      const attributeLevel = parseInt(
+        state.dialog.content.inputs.find(
+          (input) => input.id === 'attributeLevel'
+        )?.value
+      )
+
+      console.log('Updating attributeLevel')
+      socket.emit('updateCharacterAttributeLevel', {
+        attributeId,
+        level: attributeLevel,
+      })
+    })
+
+    toggleDialog()
+  }, [attributeLoaded, characterAttributeLoaded])
 
   return (
     <div>
       <Dialog />
-      <Header>
+      <Header onClick={editLevel}>
         <Title>{attributeLoaded?.name as string}</Title>
-        <SubTitle>
-          {toTwoDigits(
-            character?.attributes?.find(
-              (attribute) => attribute.attributeId === attributeId
-            )?.level || 0
-          )}
-        </SubTitle>
+        <SubTitle>{toTwoDigits(characterAttributeLoaded?.level || 0)}</SubTitle>
       </Header>
       <ItemList>
         {skills
           ?.filter((skill) => skill.attributeId === attributeId)
           ?.map((skill) => (
-            <Item key={skill.id} name={skill.name}>
-              <div>
-                <ItemInfo>
-                  {toTwoDigits(
-                    character?.skills?.find(
-                      (charSkill) => charSkill.skillId === skill.id
-                    )?.level || 0
-                  )}
-                </ItemInfo>
-              </div>
-            </Item>
+            <Skill skillId={skill.id} key={skill.id} />
           ))}
       </ItemList>
     </div>
