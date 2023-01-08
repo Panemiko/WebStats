@@ -33,10 +33,7 @@ export function CharacterPage() {
           </div>
           <div className='flex flex-col gap-2'>
             <Life />
-            <Sanity
-              sanity={character.sanity || 0}
-              maxSanity={character.maxSanity}
-            />
+            <Sanity />
           </div>
         </div>
         <div className='col-start-4 col-end-6'>
