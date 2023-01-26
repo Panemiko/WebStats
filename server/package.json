@@ -9,7 +9,8 @@
     "build": "tsc --project tsconfig.json",
     "studio": "prisma studio",
     "generate": "prisma generate",
-    "migrate": "prisma migrate"
+    "migrate": "prisma migrate",
+    "prestart": "prisma migrate deploy"
   },
   "dependencies": {
     "@prisma/client": "^4.9.0",

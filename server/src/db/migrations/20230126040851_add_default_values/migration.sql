@@ -1,0 +1,17 @@
+-- AlterTable
+ALTER TABLE "Character" ALTER COLUMN "level" SET DEFAULT 0,
+ALTER COLUMN "maxLife" SET DEFAULT 0,
+ALTER COLUMN "life" SET DEFAULT 0,
+ALTER COLUMN "maxSanity" SET DEFAULT 0,
+ALTER COLUMN "sanity" SET DEFAULT 0,
+ALTER COLUMN "maxWeight" SET DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "CharacterAttribute" ALTER COLUMN "level" SET DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "CharacterSkill" ALTER COLUMN "level" SET DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE "Item" ALTER COLUMN "weight" SET DEFAULT 0,
+ALTER COLUMN "quantity" SET DEFAULT 0;
