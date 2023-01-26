@@ -7,6 +7,7 @@ export interface InputData {
   placeholder: any
   type: string
   label: string
+  decimalPoints?: boolean
 }
 
 export interface Content {

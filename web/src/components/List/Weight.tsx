@@ -40,12 +40,13 @@ export function Weight() {
       placeholder: 'Peso máximo',
       type: 'number',
       label: 'Peso máximo',
+      decimalPoints: true,
       defaultValue: character.maxWeight.toString() || '',
     })
     setFormSubmitAction('Editar')
     setFormSubmitFunction((state, socket) => {
       const maxWeight =
-        parseInt(
+        parseFloat(
           state.dialog.content.inputs.find((input) => input.id === 'maxWeight')
             ?.value
         ) || 0

@@ -57,6 +57,7 @@ export function InventoryItem(props: InventoryItemProps) {
       placeholder: 'Peso',
       type: 'number',
       label: 'Peso do Item',
+      decimalPoints: true,
       defaultValue: item?.weight.toString() || '0',
     })
     addFormInput({
@@ -80,7 +81,7 @@ export function InventoryItem(props: InventoryItemProps) {
       )?.value
 
       const itemWeight =
-        parseInt(
+        parseFloat(
           state.dialog.content.inputs.find((input) => input.id === 'itemWeight')
             ?.value
         ) || 0

@@ -47,19 +47,24 @@ export function Dialog() {
                 }
               }}
             >
-              {dialog.content.inputs.map((input, index) => (
-                <label key={index} htmlFor={input.id}>
-                  {input.label}
-                  <TextField
-                    {...input}
-                    defaultValue={undefined}
-                    value={input.value}
-                    onChange={(e) => {
-                      setInputValue(input.id, e.target.value)
-                    }}
-                  />
-                </label>
-              ))}
+              {dialog.content.inputs.map((input, index) => {
+                const { decimalPoints, ...inputValues } = input
+
+                return (
+                  <label key={index} htmlFor={input.id}>
+                    {input.label}
+                    <TextField
+                      {...inputValues}
+                      step={decimalPoints ? 0.01 : undefined}
+                      defaultValue={undefined}
+                      value={input.value}
+                      onChange={(e) => {
+                        setInputValue(input.id, e.target.value)
+                      }}
+                    />
+                  </label>
+                )
+              })}
               <div className='flex gap-3'>
                 {dialog.content.secondarySubmitAction && (
                   <ActionButton
