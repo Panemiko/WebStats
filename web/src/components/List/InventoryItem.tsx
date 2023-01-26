@@ -82,8 +82,9 @@ export function InventoryItem(props: InventoryItemProps) {
 
       const itemWeight =
         parseFloat(
-          state.dialog.content.inputs.find((input) => input.id === 'itemWeight')
-            ?.value
+          state.dialog.content.inputs
+            .find((input) => input.id === 'itemWeight')
+            ?.value.replace(',', '.')
         ) || 0
 
       const itemQuantity =
