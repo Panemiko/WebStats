@@ -3,7 +3,7 @@ import { Header } from 'components/List/Header'
 import { Title } from 'components/List/Title'
 import { useSetup } from 'hooks/useSetup'
 import { useStoreUpdate } from 'hooks/useStoreUpdate'
-import { getSocket } from 'lib/socket'
+import { socket } from 'lib/socket'
 import { useEffect, useState } from 'react'
 
 export function NotesPage() {
@@ -19,8 +19,6 @@ export function NotesPage() {
 
   function saveNotes() {
     console.log('Updating character notes')
-    const socket = getSocket()
-
     socket.emit('updateCharacterNotes', { notes })
   }
 
@@ -37,7 +35,9 @@ export function NotesPage() {
             setNotes(e.target.value)
           }}
         />
-        <ActionButton onClick={saveNotes}>SALVAR</ActionButton>
+        <div className='px-8 pb-6'>
+          <ActionButton onClick={saveNotes}>SALVAR</ActionButton>
+        </div>
       </div>
     </div>
   )

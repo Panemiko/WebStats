@@ -63,16 +63,19 @@ export function AttributePage() {
     })
     setFormSubmitAction('Editar')
     setFormSubmitFunction((state, socket) => {
-      const attributeId = parseInt(
-        state.dialog.content.inputs.find((input) => input.id === 'attributeId')
-          ?.value
-      )
+      const attributeId =
+        parseInt(
+          state.dialog.content.inputs.find(
+            (input) => input.id === 'attributeId'
+          )?.value
+        ) || -1
 
-      const attributeLevel = parseInt(
-        state.dialog.content.inputs.find(
-          (input) => input.id === 'attributeLevel'
-        )?.value
-      )
+      const attributeLevel =
+        parseInt(
+          state.dialog.content.inputs.find(
+            (input) => input.id === 'attributeLevel'
+          )?.value
+        ) || 0
 
       console.log('Updating attributeLevel')
       socket.emit('updateCharacterAttributeLevel', {

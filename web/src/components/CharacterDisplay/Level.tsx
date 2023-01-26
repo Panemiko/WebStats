@@ -29,9 +29,11 @@ export function Level() {
     })
     setFormSubmitAction('Editar')
     setFormSubmitFunction((state, socket) => {
-      const level = parseInt(
-        state.dialog.content.inputs.find((input) => input.id === 'level')?.value
-      )
+      const level =
+        parseInt(
+          state.dialog.content.inputs.find((input) => input.id === 'level')
+            ?.value
+        ) || 0
 
       console.log('Updating character level')
       socket.emit('updateCharacterLevel', { level })

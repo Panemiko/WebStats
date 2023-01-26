@@ -11,6 +11,8 @@ export interface InputData {
 
 export interface Content {
   onSubmit: string
+  onSecondarySubmit: string
+  secondarySubmitAction: string
   submitAction: string
   inputs: InputData[]
 }
@@ -32,6 +34,8 @@ export const dialogSlice = createSlice({
       inputs: [],
       onSubmit: '',
       submitAction: '',
+      onSecondarySubmit: '',
+      secondarySubmitAction: '',
     },
   } as DialogMeta,
   reducers: {
@@ -62,12 +66,37 @@ export const dialogSlice = createSlice({
         },
       }
     },
+    setFormSecondarySubmitFunction(
+      state,
+      action: { payload: { onSecondarySubmit: string } }
+    ) {
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          onSecondarySubmit: action.payload.onSecondarySubmit,
+        },
+      }
+    },
+
     setFormSubmitAction(state, action: { payload: { actionName: string } }) {
       return {
         ...state,
         content: {
           ...state.content,
           submitAction: action.payload.actionName,
+        },
+      }
+    },
+    setSecondaryFormSubmitAction(
+      state,
+      action: { payload: { actionName: string } }
+    ) {
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          secondarySubmitAction: action.payload.actionName,
         },
       }
     },
@@ -93,6 +122,8 @@ export const dialogSlice = createSlice({
           inputs: [],
           onSubmit: '',
           submitAction: '',
+          onSecondarySubmit: '',
+          secondarySubmitAction: '',
         },
       }
     },
@@ -108,4 +139,6 @@ export const {
   setFormSubmitAction,
   setFormSubmitFunction,
   setInputValue,
+  setFormSecondarySubmitFunction,
+  setSecondaryFormSubmitAction,
 } = dialogSlice.actions

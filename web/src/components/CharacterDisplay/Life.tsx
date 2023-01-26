@@ -42,13 +42,17 @@ export function Life() {
     })
     setFormSubmitAction('Editar')
     setFormSubmitFunction((state, socket) => {
-      const life = parseInt(
-        state.dialog.content.inputs.find((input) => input.id === 'life')?.value
-      )
-      const maxLife = parseInt(
-        state.dialog.content.inputs.find((input) => input.id === 'maxLife')
-          ?.value
-      )
+      const life =
+        parseInt(
+          state.dialog.content.inputs.find((input) => input.id === 'life')
+            ?.value
+        ) || 0
+
+      const maxLife =
+        parseInt(
+          state.dialog.content.inputs.find((input) => input.id === 'maxLife')
+            ?.value
+        ) || 0
 
       if (life !== state.character.life) {
         console.log('Updating character life')

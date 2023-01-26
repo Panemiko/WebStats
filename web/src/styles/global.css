@@ -8,6 +8,7 @@
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
   outline: none;
+  overflow: auto;
 }
 
 input,
@@ -16,4 +17,20 @@ button,
 select,
 a {
   -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+**::-webkit-scrollbar {
+  @apply w-2;
+}
+
+*::-webkit-scrollbar-track {
+  @apply bg-none;
+}
+
+*::-webkit-scrollbar-thumb {
+  @apply bg-violet9 rounded-3xl;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  @apply bg-violet10;
 }

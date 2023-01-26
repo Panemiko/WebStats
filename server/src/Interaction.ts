@@ -135,21 +135,99 @@ export class Interaction {
 
     return character
   }
-
   async addCharacterItem(name: string, weight: number, quantity: number) {
-    await ItemRepository.createItem(this.characterId, name, weight, quantity)
+    const createdItem = await ItemRepository.createItem(
+      this.characterId,
+      name,
+      weight,
+      quantity
+    )
+
+    const character = await this.getCharacter()
+
+    if (!character.items.find((item) => item.id === createdItem.id)) {
+      character.items.push(createdItem)
+    }
+
+    return character
   }
 
-  async updateCharacterItem(data: Partial<Item>) {
-    await ItemRepository.updateItem(this.characterId, data)
+  async updateCharacterItem(data: Partial<Item> & { id: number }) {
+    const { id, ...itemData } = data
+    const updatedItem = await ItemRepository.updateItem(id, itemData)
+
+    const character = await this.getCharacter()
+
+    const currentItem = character.items.find(
+      (item) => item.id === updatedItem.id
+    ) as Item
+
+    if (!currentItem) {
+      character.items[character.items.indexOf(currentItem)] = updatedItem
+    }
+
+    return character
+  }
+
+  async deleteCharacterItem(itemId: number) {
+    await ItemRepository.deleteItem(itemId)
+
+    const character = await this.getCharacter()
+
+    character.items = character.items.filter((item) => item.id !== itemId)
+
+    return character
   }
 
   async addCharacterAbility(name: string, level: number) {
-    await AbilityRepository.createAbility(this.characterId, name, level)
+    const createdAbility = await AbilityRepository.createAbility(
+      this.characterId,
+      name,
+      level
+    )
+
+    const character = await this.getCharacter()
+
+    if (
+      !character.abilities.find((ability) => ability.id === createdAbility.id)
+    ) {
+      character.abilities.push(createdAbility)
+    }
+
+    return character
   }
 
-  async updateCharacterAbility(data: Partial<Ability>) {
-    await AbilityRepository.updateAbility(this.characterId, data)
+  async updateCharacterAbility(data: Partial<Ability> & { id: number }) {
+    const { id, ...abilityData } = data
+    const updatedAbility = await AbilityRepository.updateAbility(
+      id,
+      abilityData
+    )
+
+    const character = await this.getCharacter()
+
+    const currentAbility = character.abilities.find(
+      (ability) => ability.id === updatedAbility.id
+    ) as Ability
+
+    if (!currentAbility) {
+      character.abilities[character.abilities.indexOf(currentAbility)] =
+        updatedAbility
+    }
+
+    return character
+  }
+
+  async deleteCharacterAbility(abilityId: number) {
+    await AbilityRepository.deleteAbility(abilityId)
+
+    const character = await this.getCharacter()
+
+    character.abilities = character.abilities.filter(
+      (ability) => ability.id !== abilityId
+    )
+
+    return character
   }
 
   async setCharacter() {

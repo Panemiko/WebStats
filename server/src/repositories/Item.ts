@@ -22,4 +22,12 @@ export class ItemRepository {
       data,
     })
   }
+
+  static async deleteItem(itemId: number) {
+    return await database.item.delete({
+      where: {
+        id: itemId,
+      },
+    })
+  }
 }

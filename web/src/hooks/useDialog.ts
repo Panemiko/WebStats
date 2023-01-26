@@ -4,10 +4,12 @@ import {
   resetDialog,
   setDialogDescription,
   setDialogTitle,
+  setFormSecondarySubmitFunction,
   setFormSubmitAction,
   setFormSubmitFunction,
   setInputValue,
   setOpen,
+  setSecondaryFormSubmitAction,
 } from 'lib/dialog'
 import { serializeFunction } from 'lib/store'
 import { store } from 'lib/store'
@@ -51,6 +53,21 @@ export function useDialog() {
     },
     async setInputValue(inputId: string, value: string) {
       store.dispatch(setInputValue({ inputId, value }))
+    },
+    async setFormSecondarySubmitFunction(
+      onSecondaryChange: (
+        state: ReturnType<typeof store.getState>,
+        socket: Socket
+      ) => any
+    ) {
+      store.dispatch(
+        setFormSecondarySubmitFunction({
+          onSecondarySubmit: serializeFunction(onSecondaryChange),
+        })
+      )
+    },
+    async setFormSecondarySubmitAction(actionName: string) {
+      store.dispatch(setSecondaryFormSubmitAction({ actionName }))
     },
   }
 }

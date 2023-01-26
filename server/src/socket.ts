@@ -27,9 +27,11 @@ export interface ClientToServerEvents {
     weight: number
     quantity: number
   }): any
-  updateCharacterItem(params: Partial<Item>): any
+  updateCharacterItem(params: Partial<Item> & { id: number }): any
+  deleteCharacterItem(params: { itemId: number }): any
   addCharacterAbility(params: { name: string; level: number }): any
-  updateCharacterAbility(params: Partial<Ability>): any
+  updateCharacterAbility(params: Partial<Ability> & { id: number }): any
+  deleteCharacterAbility(params: { abilityId: number }): any
 }
 
 interface InterServerEvents {
@@ -132,6 +134,12 @@ export async function createSocketServer(server: HTTPServer) {
         })
       })
 
+      socket.on('deleteCharacterItem', (data) => {
+        updateCharacter(async () => {
+          return await interaction.deleteCharacterItem(data.itemId)
+        })
+      })
+
       socket.on('addCharacterAbility', ({ name, level }) => {
         updateCharacter(async () => {
           return await interaction.addCharacterAbility(name, level)
@@ -141,6 +149,12 @@ export async function createSocketServer(server: HTTPServer) {
       socket.on('updateCharacterAbility', (data) => {
         updateCharacter(async () => {
           return await interaction.updateCharacterAbility(data)
+        })
+      })
+
+      socket.on('deleteCharacterAbility', (data) => {
+        updateCharacter(async () => {
+          return await interaction.deleteCharacterAbility(data.abilityId)
         })
       })
     })

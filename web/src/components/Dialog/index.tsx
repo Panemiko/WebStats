@@ -3,7 +3,7 @@ import { ActionButton } from 'components/ActionButton'
 import { TextField } from 'components/Dialog/TextField'
 import { useDialog } from 'hooks/useDialog'
 import { useStoreUpdate } from 'hooks/useStoreUpdate'
-import { getSocket } from 'lib/socket'
+import { socket } from 'lib/socket'
 import { deserializeFunction, store } from 'lib/store'
 import { useCallback } from 'react'
 
@@ -13,7 +13,15 @@ export function Dialog() {
 
   const handleSubmit = useCallback(() => {
     toggleDialog()
-    deserializeFunction(dialog.content.onSubmit)(store.getState(), getSocket())
+    deserializeFunction(dialog.content.onSubmit)(store.getState(), socket)
+  }, [dialog])
+
+  const handleSecondarySubmit = useCallback(() => {
+    toggleDialog()
+    deserializeFunction(dialog.content.onSecondarySubmit)(
+      store.getState(),
+      socket
+    )
   }, [dialog])
 
   return (
@@ -52,9 +60,19 @@ export function Dialog() {
                   />
                 </label>
               ))}
-              <ActionButton onClick={handleSubmit}>
-                {dialog.content.submitAction}
-              </ActionButton>
+              <div className='flex gap-3'>
+                {dialog.content.secondarySubmitAction && (
+                  <ActionButton
+                    variant='secondary'
+                    onClick={handleSecondarySubmit}
+                  >
+                    {dialog.content.secondarySubmitAction}
+                  </ActionButton>
+                )}
+                <ActionButton onClick={handleSubmit}>
+                  {dialog.content.submitAction}
+                </ActionButton>
+              </div>
             </div>
           </DialogPrimitive.Content>
         </div>

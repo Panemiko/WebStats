@@ -65,15 +65,17 @@ export function Skill(props: SkillProps) {
     })
     setFormSubmitAction('Editar')
     setFormSubmitFunction((state, socket) => {
-      const skillId = parseInt(
-        state.dialog.content.inputs.find((input) => input.id === 'skillId')
-          ?.value
-      )
+      const skillId =
+        parseInt(
+          state.dialog.content.inputs.find((input) => input.id === 'skillId')
+            ?.value
+        ) || -1
 
-      const skillLevel = parseInt(
-        state.dialog.content.inputs.find((input) => input.id === 'skillLevel')
-          ?.value
-      )
+      const skillLevel =
+        parseInt(
+          state.dialog.content.inputs.find((input) => input.id === 'skillLevel')
+            ?.value
+        ) || 0
 
       console.log('Updating skillLevel')
       socket.emit('updateCharacterSkillLevel', {

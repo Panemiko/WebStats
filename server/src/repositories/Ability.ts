@@ -17,4 +17,12 @@ export class AbilityRepository {
       data,
     })
   }
+
+  static async deleteAbility(abilityId: number) {
+    return await database.ability.delete({
+      where: {
+        id: abilityId,
+      },
+    })
+  }
 }

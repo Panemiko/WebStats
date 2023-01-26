@@ -42,14 +42,17 @@ export function Sanity() {
     })
     setFormSubmitAction('Editar')
     setFormSubmitFunction((state, socket) => {
-      const sanity = parseInt(
-        state.dialog.content.inputs.find((input) => input.id === 'sanity')
-          ?.value
-      )
-      const maxSanity = parseInt(
-        state.dialog.content.inputs.find((input) => input.id === 'maxSanity')
-          ?.value
-      )
+      const sanity =
+        parseInt(
+          state.dialog.content.inputs.find((input) => input.id === 'sanity')
+            ?.value
+        ) || 0
+
+      const maxSanity =
+        parseInt(
+          state.dialog.content.inputs.find((input) => input.id === 'maxSanity')
+            ?.value
+        ) || 0
 
       if (sanity !== state.character.sanity) {
         console.log('Updating character sanity')
