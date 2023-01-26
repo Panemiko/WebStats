@@ -55,7 +55,7 @@ export function Dialog() {
                     {input.label}
                     <TextField
                       {...inputValues}
-                      step={decimalPoints ? 0.01 : undefined}
+                      step={decimalPoints ? 'any' : undefined}
                       defaultValue={undefined}
                       value={input.value}
                       onChange={(e) => {

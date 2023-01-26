@@ -44,6 +44,7 @@ export function InventoryPage() {
       type: 'number',
       label: 'Peso do Item',
       defaultValue: '0',
+      decimalPoints: true,
     })
     addFormInput({
       id: 'itemQuantity',
@@ -60,7 +61,7 @@ export function InventoryPage() {
       )?.value
 
       const itemWeight =
-        parseInt(
+        parseFloat(
           state.dialog.content.inputs.find((input) => input.id === 'itemWeight')
             ?.value
         ) || 0
