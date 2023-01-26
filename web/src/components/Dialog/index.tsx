@@ -29,7 +29,10 @@ export function Dialog() {
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className='bg-violet12 fixed inset-0 opacity-20' />
         <div className='fixed inset-0 flex justify-center px-6 py-8'>
-          <DialogPrimitive.Content className='bg-slate2 z-10 rounded-lg text-slate11 py-12 px-5 w-[stretch] h-fit outline-none'>
+          <DialogPrimitive.Content
+            onOpenAutoFocus={(e) => e.preventDefault()}
+            className='bg-slate2 z-10 rounded-lg text-slate11 py-12 px-5 w-[stretch] h-fit outline-none'
+          >
             <div className='mb-10'>
               <DialogPrimitive.Title className='text-violet12 font-bold text-2xl capitalize'>
                 {dialog.title}
@@ -55,6 +58,7 @@ export function Dialog() {
                     {input.label}
                     <TextField
                       {...inputValues}
+                      autoFocus={false}
                       step={decimalPoints ? 'any' : undefined}
                       defaultValue={undefined}
                       value={input.value}
