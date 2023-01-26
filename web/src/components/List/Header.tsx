@@ -9,7 +9,7 @@ export function Header(props: HeaderProps) {
   return (
     <header
       onClick={onClick}
-      className='bg-violet2 py-4 mb-5 flex justify-center items-center gap-12'
+      className='bg-violet2 sticky top-0 left-0 w-screen py-4 mb-5 flex justify-center items-center gap-12'
     >
       {children}
     </header>

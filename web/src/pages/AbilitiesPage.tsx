@@ -1,6 +1,7 @@
 import { ActionButton } from 'components/ActionButton'
 import { Dialog } from 'components/Dialog'
 import { Ability } from 'components/List/Ability'
+import { ButtonContainer } from 'components/List/ButtonContainer'
 import { Header } from 'components/List/Header'
 import { ItemList } from 'components/List/ItemList'
 import { Title } from 'components/List/Title'
@@ -76,9 +77,9 @@ export function AbilitiesPage() {
           <Ability abilityId={ability.id} key={ability.id} />
         ))}
       </ItemList>
-      <div className='px-8 pb-6'>
+      <ButtonContainer>
         <ActionButton onClick={addAbility}>ADICIONAR</ActionButton>
-      </div>
+      </ButtonContainer>
     </div>
   )
 }

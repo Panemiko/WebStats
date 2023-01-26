@@ -73,6 +73,12 @@ export class Interaction {
     })
   }
 
+  async updateCharacterMaxWeight(maxWeight: number) {
+    return await this.updateCharacter({
+      maxWeight,
+    })
+  }
+
   async updateCharacterAttributeLevel(attributeId: number, level: number) {
     const character = await this.getCharacter()
 
@@ -135,6 +141,7 @@ export class Interaction {
 
     return character
   }
+
   async addCharacterItem(name: string, weight: number, quantity: number) {
     const createdItem = await ItemRepository.createItem(
       this.characterId,

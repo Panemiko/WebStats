@@ -17,6 +17,7 @@ export interface ClientToServerEvents {
   updateCharacterMaxlife(params: { maxLife: number }): any
   updateCharacterSanity(params: { sanity: number }): any
   updateCharacterMaxSanity(params: { maxSanity: number }): any
+  updateCharacterMaxWeight(params: { maxWeight: number }): any
   updateCharacterAttributeLevel(params: {
     attributeId: number
     level: number
@@ -104,6 +105,12 @@ export async function createSocketServer(server: HTTPServer) {
       socket.on('updateCharacterMaxSanity', ({ maxSanity }) => {
         updateCharacter(async () => {
           return await interaction.updateCharacterMaxSanity(maxSanity)
+        })
+      })
+
+      socket.on('updateCharacterMaxWeight', ({ maxWeight }) => {
+        updateCharacter(async () => {
+          return await interaction.updateCharacterMaxWeight(maxWeight)
         })
       })
 

@@ -1,4 +1,5 @@
 import { ActionButton } from 'components/ActionButton'
+import { ButtonContainer } from 'components/List/ButtonContainer'
 import { Header } from 'components/List/Header'
 import { Title } from 'components/List/Title'
 import { useSetup } from 'hooks/useSetup'
@@ -28,17 +29,17 @@ export function NotesPage() {
         <Title>Anotações</Title>
       </Header>
       <div className='px-5'>
-        <input
-          className='h-[stretch] bg-violet3 hover:bg-violet4 focus:bg-violet5 rounded-xl px-3 w-[stretch] text-lg py-5 text-violet12 mb-6 outline-none '
+        <textarea
+          className='h-screen bg-violet3 hover:bg-violet4 focus:bg-violet5 rounded-xl px-3 w-[stretch] text-lg py-5 text-violet12 mb-6 outline-none'
           value={notes}
           onChange={(e) => {
             setNotes(e.target.value)
           }}
         />
-        <div className='px-8 pb-6'>
-          <ActionButton onClick={saveNotes}>SALVAR</ActionButton>
-        </div>
       </div>
+      <ButtonContainer>
+        <ActionButton onClick={saveNotes}>SALVAR</ActionButton>
+      </ButtonContainer>
     </div>
   )
 }

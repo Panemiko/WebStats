@@ -8,7 +8,6 @@
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
   outline: none;
-  overflow: auto;
 }
 
 input,

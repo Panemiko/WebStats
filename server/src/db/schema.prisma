@@ -15,17 +15,17 @@ model Character {
   name       String
   age        Int
   picture    String
-  level      Int
-  maxLife    Int
-  life       Int
-  maxSanity  Int
-  sanity     Int
-  maxWeight  Float
+  level      Int                  @default(0)
+  maxLife    Int                  @default(0)
+  life       Int                  @default(0)
+  maxSanity  Int                  @default(0)
+  sanity     Int                  @default(0)
+  maxWeight  Float                @default(0)
   attributes CharacterAttribute[]
   skills     CharacterSkill[]
   abilities  Ability[]
   items      Item[]
-  notes      String
+  notes      String               @db.Text
 }
 
 model Attribute {
@@ -48,7 +48,7 @@ model CharacterAttribute {
   id          Int       @id @default(autoincrement())
   character   Character @relation(fields: [characterId], references: [id])
   attribute   Attribute @relation(fields: [attributeId], references: [id])
-  level       Int
+  level       Int       @default(0)
   characterId Int
   attributeId Int
 }
@@ -57,7 +57,7 @@ model CharacterSkill {
   id          Int       @id @default(autoincrement())
   character   Character @relation(fields: [characterId], references: [id])
   skill       Skill     @relation(fields: [skillId], references: [id])
-  level       Int
+  level       Int       @default(0)
   characterId Int
   skillId     Int
 }
@@ -66,7 +66,7 @@ model Ability {
   id          Int       @id @default(autoincrement())
   character   Character @relation(fields: [characterId], references: [id])
   name        String
-  level       Int
+  level       Int       @default(0)
   characterId Int
 }
 
@@ -74,7 +74,7 @@ model Item {
   id          Int       @id @default(autoincrement())
   character   Character @relation(fields: [characterId], references: [id])
   name        String
-  weight      Float
-  quantity    Int
+  weight      Float     @default(0)
+  quantity    Int       @default(0)
   characterId Int
 }

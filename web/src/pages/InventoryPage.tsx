@@ -1,12 +1,12 @@
 import { ActionButton } from 'components/ActionButton'
 import { Dialog } from 'components/Dialog'
+import { ButtonContainer } from 'components/List/ButtonContainer'
 import { Header } from 'components/List/Header'
 import { InventoryItem } from 'components/List/InventoryItem'
 import { ItemList } from 'components/List/ItemList'
-import { SubTitle } from 'components/List/SubTitle'
 import { Title } from 'components/List/Title'
+import { Weight } from 'components/List/Weight'
 import { useDialog } from 'hooks/useDialog'
-import { useNumberFormat } from 'hooks/useNumberFormat'
 import { useSetup } from 'hooks/useSetup'
 import { useStoreUpdate } from 'hooks/useStoreUpdate'
 import { useCallback } from 'react'
@@ -15,19 +15,6 @@ export function InventoryPage() {
   useSetup()
 
   const { character } = useStoreUpdate()
-  const { toTwoDecimals } = useNumberFormat()
-
-  function calcTotalWeight() {
-    let total = 0
-
-    character?.items?.forEach((item) => {
-      total += item.weight * item.quantity
-    })
-
-    return total
-  }
-
-  const totalWeight = calcTotalWeight()
 
   const {
     addFormInput,
@@ -101,20 +88,16 @@ export function InventoryPage() {
       <Dialog />
       <Header>
         <Title>Inventário</Title>
-        <SubTitle
-          color={totalWeight > character?.maxWeight ? 'error' : 'default'}
-        >
-          {toTwoDecimals(totalWeight)}kg/{character?.maxWeight}kg
-        </SubTitle>
+        <Weight />
       </Header>
       <ItemList>
         {character?.items?.map((item) => (
           <InventoryItem itemId={item.id} key={item.id} />
         ))}
       </ItemList>
-      <div className='px-8 pb-6'>
+      <ButtonContainer>
         <ActionButton onClick={addItem}>ADICIONAR</ActionButton>
-      </div>
+      </ButtonContainer>
     </div>
   )
 }
