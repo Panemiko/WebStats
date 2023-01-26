@@ -14,8 +14,7 @@ export function NotesPage() {
   const [notes, setNotes] = useState('')
 
   useEffect(() => {
-    if (character.notes !== notes) return
-    setNotes(character.notes)
+    if (character.notes !== notes && notes === '') setNotes(character.notes)
   }, [character])
 
   function saveNotes() {
