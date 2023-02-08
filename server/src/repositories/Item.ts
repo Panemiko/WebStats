@@ -23,6 +23,14 @@ export class ItemRepository {
     })
   }
 
+  static async findById(itemId: number) {
+    return await database.item.findUnique({
+      where: {
+        id: itemId,
+      },
+    })
+  }
+
   static async deleteItem(itemId: number) {
     return await database.item.delete({
       where: {

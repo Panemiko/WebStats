@@ -25,4 +25,12 @@ export class AbilityRepository {
       },
     })
   }
+
+  static async findById(abilityId: number) {
+    return await database.ability.findUnique({
+      where: {
+        id: abilityId,
+      },
+    })
+  }
 }

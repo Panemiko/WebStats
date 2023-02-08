@@ -177,10 +177,11 @@ export class Interaction {
   }
 
   async deleteCharacterItem(itemId: number) {
-    await ItemRepository.deleteItem(itemId)
-
     const character = await this.getCharacter()
 
+    if (!(await ItemRepository.findById(itemId))) return character
+
+    await ItemRepository.deleteItem(itemId)
     character.items = character.items.filter((item) => item.id !== itemId)
 
     return character
@@ -226,10 +227,11 @@ export class Interaction {
   }
 
   async deleteCharacterAbility(abilityId: number) {
-    await AbilityRepository.deleteAbility(abilityId)
-
     const character = await this.getCharacter()
 
+    if (!(await AbilityRepository.findById(abilityId))) return character
+
+    await AbilityRepository.deleteAbility(abilityId)
     character.abilities = character.abilities.filter(
       (ability) => ability.id !== abilityId
     )
