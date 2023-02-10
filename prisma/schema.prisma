@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Rpg {
+  id         String      @id @default(cuid())
+  name       String
+  author     String
+  characters Character[]
+
+  @@map("rpgs")
+}
+
+model Character {
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+  rpg       Rpg      @relation(fields: [rpgId], references: [id])
+  name      String
+  age       Int      @default(0)
+  picture   String
+  level     Int      @default(0)
+  maxLife   Int      @default(0)
+  life      Int      @default(0)
+  maxSanity Int      @default(0)
+  sanity    Int      @default(0)
+  maxWeight Float    @default(0)
+  notes     String
+  rpgId     String
+
+  @@map("characters")
+}
