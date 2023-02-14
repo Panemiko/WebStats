@@ -25,7 +25,7 @@ model Character {
   skills     CharacterSkill[]
   abilities  Ability[]
   items      Item[]
-  notes      String               @db.Text
+  notes      String
 }
 
 model Attribute {
