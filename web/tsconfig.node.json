@@ -4,7 +4,8 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src/"
+    "baseUrl": "./src/",
+    "strict": false
   },
   "include": ["vite.config.ts"]
 }

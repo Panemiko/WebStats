@@ -5,7 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "dev": "tsx watch --clear-screen=false .",
-    "start": "conc \"prisma studio\" \"node ./dist/server.js\"",
+    "start": "node ./dist/server.js",
     "build": "tsc --project tsconfig.json",
     "studio": "prisma studio",
     "generate": "prisma generate",
